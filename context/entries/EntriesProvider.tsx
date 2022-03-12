@@ -59,12 +59,30 @@ export const EntriesProvider: FC = ({ children }: any) => {
 
   }
 
+  const deleteEntry = async (entry: Entry) => {
+
+    try {
+      
+      await entriesApi.delete<Entry>('/entries/' + entry._id,);
+      
+      dispatch({
+        type: 'Entries - delete entry',
+        payload: entry
+      });
+      
+    } catch (error) {
+      console.log('algo mal salio');
+    }
+
+  }
+
   return (
     <EntriesContext.Provider
       value={{
         ...state,
         addNewEntry,
         updateEntry,
+        deleteEntry,
       }}
     >
       {children}
